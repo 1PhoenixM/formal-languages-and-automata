@@ -9,7 +9,7 @@ public class driverDFA {
 		ManWolf ManWolfDFA = new ManWolf();
 		
 		//Print the adequate message
-		String out = ManWolfDFA.accepts(in) ? "This is a solution." : "This is not a solution.";
+		String out = ManWolfDFA.accepts(in) ? "That is a solution." : "That is not a solution.";
 		System.out.println(out);
 		
 	}

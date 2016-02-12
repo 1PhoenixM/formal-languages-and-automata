@@ -48,7 +48,12 @@ public class ManWolf {
 	public boolean accepts(String s){
 		int currentState = q0;
 		for(int i = 0; i < s.length(); i++){
-			currentState = this.delta[currentState][charLookup.get(s.charAt(i))];
+			try{
+				currentState = this.delta[currentState][charLookup.get(s.charAt(i))];
+			}
+			catch(NullPointerException e){
+				return false;
+			}
 		}
 		return currentState == q9;
 	}
