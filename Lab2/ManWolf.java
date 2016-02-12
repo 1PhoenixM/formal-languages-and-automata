@@ -1,4 +1,14 @@
-//Melissa Iori
+/*
+ * file: ManWolf.java
+ * author: Melissa Iori
+ * course: CMPT 440
+ * assignment: Lab 2
+ * due date: February 15, 2016
+ * version 1.0
+ * 
+ * This file contains the ManWolf DFA definition class.
+ *
+ */
 
 //HashMap is used to link characters to matrix position
 import java.util.HashMap;
@@ -36,25 +46,25 @@ public class ManWolf {
                            {e, q8, e, e},   //q9
                            {e, e, e, e}};    //e
 	
-    //Initializes the DFA
-	public ManWolf(){
-		 charLookup.put((Character)('c'), (Integer)(0));
-		 charLookup.put((Character)('g'), (Integer)(1));
-		 charLookup.put((Character)('n'), (Integer)(2));
-		 charLookup.put((Character)('w'), (Integer)(3));
-	}
+   //Initializes the DFA
+   public ManWolf(){
+     charLookup.put((Character)('c'), (Integer)(0));
+     charLookup.put((Character)('g'), (Integer)(1));
+     charLookup.put((Character)('n'), (Integer)(2));
+     charLookup.put((Character)('w'), (Integer)(3));
+   }
 	
-	//Method to test whether a string is accepted by the DFA
-	public boolean accepts(String s){
-		int currentState = q0;
-		for(int i = 0; i < s.length(); i++){
-			try{
-				currentState = this.delta[currentState][charLookup.get(s.charAt(i))];
-			}
-			catch(NullPointerException e){
-				return false;
-			}
-		}
-		return currentState == q9;
-	}
+   //Method to test whether a string is accepted by the DFA
+   public boolean accepts(String s){
+     int currentState = q0;
+     for(int i = 0; i < s.length(); i++){
+     try{
+       currentState = this.delta[currentState][charLookup.get(s.charAt(i))];
+     }
+     catch(NullPointerException e){
+       return false;
+     }
+    }
+    return currentState == q9;
+    }
 }
