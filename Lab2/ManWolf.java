@@ -45,7 +45,7 @@ public class ManWolf {
                            {e, q9, q7, e},  //q8
                            {e, q8, e, e},   //q9
                            {e, e, e, e}};    //e
-	
+  
    //Initializes the DFA
    public ManWolf(){
      charLookup.put((Character)('c'), (Integer)(0));
@@ -53,7 +53,7 @@ public class ManWolf {
      charLookup.put((Character)('n'), (Integer)(2));
      charLookup.put((Character)('w'), (Integer)(3));
    }
-	
+  
    //Method to test whether a string is accepted by the DFA
    public boolean accepts(String s){
      int currentState = q0;
