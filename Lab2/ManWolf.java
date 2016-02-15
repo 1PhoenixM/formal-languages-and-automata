@@ -10,6 +10,11 @@
  *
  */
 
+/* 
+ * ManWolf
+ * 
+ * This class implements a deterministic finite automaton for the man-wolf-cabbage-goat problem.
+ */
 //HashMap is used to link characters to matrix position
 import java.util.HashMap;
 
@@ -46,7 +51,16 @@ public class ManWolf {
                            {e, q8, e, e},   //q9
                            {e, e, e, e}};    //e
   
-   //Initializes the DFA
+   /*
+    * ManWolf
+    *
+    * Initializes an instance of the ManWolf DFA. Populates mapping of characters in the alphabet to matrix positions.
+    *
+    * Parameters: none
+    * 
+    * Return value: a DFA object, with type ManWolf.
+    *
+    */
    public ManWolf(){
      charLookup.put((Character)('c'), (Integer)(0));
      charLookup.put((Character)('g'), (Integer)(1));
@@ -54,7 +68,19 @@ public class ManWolf {
      charLookup.put((Character)('w'), (Integer)(3));
    }
   
-   //Method to test whether a string is accepted by the DFA
+   /*
+    * accepts
+    * 
+    * Tests an input String to see if it is accepted by the ManWolf DFA transition table.
+    * q0 is the start state. For each character in the string, the state moves ahead via the delta transition
+    * for that state and character. If, at the end of this loop, the current state is the only accepting state, q9, then the String is accepted.
+    * Otherwise, it is rejected.
+    * 
+    * Parameters: 
+    *   s: a String of input characters, assumed to be in the alphabet. if a character is not in the alphabet, the String will be rejected.
+    * 
+    * Return value: boolean, true if accepted, false if not accepted or invalid character not in alphabet found.
+    */
    public boolean accepts(String s){
      int currentState = q0;
      for(int i = 0; i < s.length(); i++){
