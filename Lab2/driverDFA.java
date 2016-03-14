@@ -37,7 +37,8 @@ public class driverDFA {
   public static void main(String[] args){
     
     //Creates one string as input by creating a string with intact spaces
-    String in = String.join(" ", args);
+    //String in = String.join(" ", args);  //this line leads to erros on older versions of java
+    String in = args[0];
     
     //Creates the DFA
     ManWolf ManWolfDFA = new ManWolf();
