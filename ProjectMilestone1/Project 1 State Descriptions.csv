@@ -1,0 +1,44 @@
+State,Description
+q0,The start state.
+q1,"Received ""*"", the start of a comment."
+q2,"Received ""*-"", the start of a comment."
+q3,"Received ""*- "", the start of a comment."
+q4,"Received ""*- "" and an [a-z] or space. Can loop here for as long as the comment is."
+q5,"Received a <space> inside a comment. If an [a-z] or another <space> follows, continue in the CharList. If a - follows, it is the end of the comment."
+q6,"Received a ""-"", comment is ending."
+q7,"Accepts a complete comment with ""*""."
+q8,"Received a ""p"" which may be an Identifier, or the start of a Print Statement."
+q9,"Received ""pr"", for Print Statement."
+q10,"Received ""pri"", for Print Statement."
+q11,"Received ""prin"", for Print Statement."
+q12,"Received ""print"", for Print Statement."
+q13,"Received ""print "", for Print Statement."
+q14,"Received ""print ("", for Print Statement."
+q15,"Received ""print ( "", for Print Statement. Can choose one of three Expression types here."
+q16,Received a single digit [0-9] to print.
+q17,Received a single digit [0-9] followed by a <space>.
+q18,"Received an intop, + to continue the Expression. If a <space> follows, loop back to q15 to add another Expression."
+q19,"Received a "" for a String Expression."
+q20,"Received a "" and <space> for a String Expression. Can loop here for as long as the String lasts."
+q21,"Received a <space> inside a String. If an [a-z] or another <space> follows, continue in the CharList. If a "" follows, it is the end of the String."
+q22,"Received a "" to end the String."
+q23,Received a <space> after a String Expression or Identifier.
+q24,Received a single [a-z] character Identifier.
+q25,Accepts a complete print statement with ).
+q26,"Received any [a-z] except for p or v, starting an Assignment Statement."
+q27,Received any [a-z] followed by a <space>.
+q28,"Received an assignment operator, =."
+q29,"Received an Identifier, =, and <space>. Can choose one of three Expression types here."
+q30,Accepts an Integer Assignment with a digit [0-9]
+q31,Received a single digit [0-9] followed by a <space>.
+q32,"Received an intop, + to continue the Expression. If a <space> follows, loop back to q29 to add another Expression."
+q33,"Received a "" for a String Expression."
+q34,"Received a "" and <space> for a String Expression. Can loop here for as long as the String lasts."
+q35,"Received a <space> inside a String. If an [a-z] or another <space> follows, continue in the CharList. If a "" follows, it is the end of the String."
+q36,Accepts a Variable Assignment with an Identifier.
+q37,"Accepts a String Assignment with a "" to end the String."
+q38,"Received a ""v"" which may be an Identifier, or the start of a Variable Declaration."
+q39,"Received ""va"", for Variable Declaration."
+q40,"Received ""var"", for Variable Declaration."
+q41,"Received ""var "", for Variable Declaration."
+q42,Accepts a Variable Declaration with an Identifier [a-z].
