@@ -377,15 +377,17 @@ public class syntaxHighlightingGUI extends Application {
       matcher.appendTail(sb);
      
       String cleanText = sb.toString().trim();
-      //System.out.println("I see: " + cleanText);
+      //Preserve spaces
       if(cleanText.endsWith("&nbsp;")){
     	  cleanText = cleanText.substring(0,cleanText.length()-6);
     	  cleanText = cleanText.replaceAll("&nbsp;", " ");
     	  cleanText += "&nbsp;";
       }
+      //Replace spaces so that DFA can read in the string
       else{
     	  cleanText = cleanText.replaceAll("&nbsp;", " ");
       }
+      //Reduce whitespace
       cleanText = cleanText.replaceAll(" +", " ");
      
       //Use DFA to evaluate the user input and return a mapping of the colors to be used and where they should be used.
@@ -438,23 +440,19 @@ public class syntaxHighlightingGUI extends Application {
 				  //The start of the next Statement will be at the next position
 				  start = (Integer)(stringIndices[i])+1; 
 			  }
-			  //difference between cleanText and sb.toString()
+
 			  //End the span at the end of the Statement
 			  htmlString += "</span>"; //adds line break
+			  //Add line break if in line mode
 			  if(lineMode){
 				  htmlString += "<br>";
 			  }
 		  } 
 		  //Add the rest of the input, say if there is a valid Statement and more input after it that is not valid after
 		  //start will be set to 0 if there were no Statements, and this would be the entire input
-		  //account for &nbsp;
-		  //DFA will read: var a print ( a )
-		  //User sees: var a &nbsp;print ( a )
 		  if(start < cleanText.length()){
-			  //cleanText = cleanText.replaceAll(" +&nbsp;", "&nbsp;");
 			  htmlString += cleanText.substring(start,cleanText.length()); 
 		  }
-		  //htmlString = htmlString.replaceAll("</span>", "</span>&nbsp;");
 	  }
 	  //If no valid Statements yet, just add back all the input
 	  else{
