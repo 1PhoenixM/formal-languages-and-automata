@@ -21,6 +21,15 @@ import java.util.HashMap;
 //syntaxHighlightingDFA class - Creates and tests strings for a simple programming language.
 public class syntaxHighlightingDFA {
  
+  //Colors - Each color is used to highlight a Statement in our language.
+  //They are in hex color format, RRGGBB (red-green-blue values from 00 to FF)
+  private String _commentColor = "40E0D0";
+  private String _vardeclColor = "FF4500";
+  private String _printColor = "00FA20";
+  private String _intassignColor = "FF00FF"; 
+  private String _stringassignColor = "FFFF00";
+  private String _varassignColor = "FFD700"; 
+  
   //States
   private static final int q0 = 0;
   private static final int q1 = 1;
@@ -68,13 +77,12 @@ public class syntaxHighlightingDFA {
   private static final int q40 = 40;
   private static final int q41 = 41;
   private static final int q42 = 42;
-  private static final int e = 43;
+  private static final int e = 43; //error state
 
   //Maps characters in the alphabet onto matrix positions
   private HashMap<Character,Integer> charLookup = new HashMap<Character,Integer>();
  
-  //Transition state matrix
-  
+  //Transition state matrix (DFA)
   //a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,0,1,2,3,4,5,6,7,8,9,<space>,+,*,-,"""",(,),=
   private int[][] delta = {{q26,q26,q26,q26,q26,q26,q26,q26,q26,q26,q26,q26,q26,q26,q26,q8,q26,q26,q26,q26,q26,q38,q26,q26,q26,q26,e,e,e,e,e,e,e,e,e,e,e,e,q1,e,e,e,e,e}, //q0
 		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,q2,e,e,e,e}, //q1
@@ -83,7 +91,7 @@ public class syntaxHighlightingDFA {
 		  {q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,e,e,e,e,e,e,e,e,e,e,q5,e,e,e,e,e,e,e}, //q4
 		  {q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,q4,e,e,e,e,e,e,e,e,e,e,q4,e,e,q6,e,e,e,e}, //q5
 		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,q7,e,e,e,e,e}, //q6
-		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e}, //q7
+		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,q0,e,e,e,e,e,e,e}, //q7
 		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,q9,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,q27,e,e,e,e,e,e,e}, //q8
 		  {e,e,e,e,e,e,e,e,q10,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e}, //q9
 		  {e,e,e,e,e,e,e,e,e,e,e,e,e,q11,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e}, //q10
@@ -101,7 +109,7 @@ public class syntaxHighlightingDFA {
 		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,q23,e,e,e,e,e,e,e}, //q22
 		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,q25,e}, //q23
 		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,q23,e,e,e,e,e,e,e}, //q24
-		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e}, //q25
+		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,q0,e,e,e,e,e,e,e}, //q25
 		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,q27,e,e,e,e,e,e,e}, //q26
 		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,q28}, //q27
 		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,q29,e,e,e,e,e,e,e}, //q28
@@ -112,13 +120,13 @@ public class syntaxHighlightingDFA {
 		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,q34,e,e,e,e,e,e,e}, //q33
 		  {q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,e,e,e,e,e,e,e,e,e,e,q35,e,e,e,e,e,e,e}, //q34
 		  {q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,e,e,e,e,e,e,e,e,e,e,q34,e,e,e,q37,e,e,e}, //q35
-		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e}, //q36
-		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e}, //q37
+		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,q0,e,e,e,e,e,e,e}, //q36
+		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,q0,e,e,e,e,e,e,e}, //q37
 		  {q39,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,q27,e,e,e,e,e,e,e}, //q38
 		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,q40,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e}, //q39
 		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,q41,e,e,e,e,e,e,e}, //q40
 		  {q42,q42,q42,q42,q42,q42,q42,q42,q42,q42,q42,q42,q42,q42,q42,q42,q42,q42,q42,q42,q42,q42,q42,q42,q42,q42,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e}, //q41
-		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e}, //q42
+		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,q0,e,e,e,e,e,e,e}, //q42
 		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e}}; //e
   
    /*
@@ -177,47 +185,91 @@ public class syntaxHighlightingDFA {
      charLookup.put((Character)(')'), (Integer)(42));
      charLookup.put((Character)('='), (Integer)(43));
    }
+   
+   /*
+    * setColors
+    * 
+    * Called by the GUI when the user loads a color file.
+    * Sets the syntax highlighting colors.
+    * 
+    * Parameters: commentColor : The color for comments.
+    * vardeclColor : The color for variable declarations.
+    * printColor : The color for print statements.
+    * intassignColor : The color for integer assignments.
+    * stringassignColor : The color for string assignments.
+    * varassignColor : The color for variable assignments.
+    * 
+    * Return value: None
+    */
+   public void setColors(String commentColor, String vardeclColor, String printColor, String intassignColor, String stringassignColor, String varassignColor){
+	   	   _commentColor = commentColor;
+	   	   _vardeclColor = vardeclColor;
+	   	   _printColor = printColor;
+	   	   _intassignColor = intassignColor;
+	   	   _stringassignColor = stringassignColor;
+	   	   _varassignColor = varassignColor;
+   }
   
    /*
     * accepts
     * 
     * Tests an input String to see if it is accepted by the syntaxHighlighting DFA transition table.
     * q0 is the start state. For each character in the string, the state moves ahead via the delta transition
-    * for that state and character. When an accepting state is found, the hex color for that valid Statement is returned.
+    * for that state and character. When an accepting state is found, the hex color for that valid Statement is added
+    * to the HashMap, with a key as the position in the input string where that Statement ends. For the whole program,
+    * the DFA analyzes it and returns the HashMap containing string indices and the colors mapped to them.
     * 
     * Parameters: 
     *   s: a String of input characters, assumed to be in the alphabet. if a character is not in the alphabet, the String will be rejected.
     * 
-    * Return value: String, returns an HTML color, 000000 (black) if not accepted or if a character is not found in the alphabet, or a highlighting color if accepted.
+    * Return value: A HashMap<Integer,String> which uses positions in the input string as keys, mapped to hex color values for the Statement accepted.
     */
-   public String accepts(String s){
+   public HashMap<Integer,String> accepts(String s){
+	 
+	 //s = s.replaceAll("&nbsp;", " ");
+	 //s = s.replaceAll("\n", " ");
+	 //System.out.println("DFA sees: " + s);
+	 
+	 //Defines the HashMap
+	 HashMap<Integer,String> syntaxHighlighting = new HashMap<Integer,String>();
+	 //The start state is q0
      int currentState = q0;
+     
+     //For each character in the input...
      for(int i = 0; i < s.length(); i++){
      try{
+       //Move to a new state based on the current state and character.
        currentState = this.delta[currentState][charLookup.get(s.charAt(i))];
        if(currentState == q7){
-    	   return "0000FF"; //comments are blue
+    	   //Comment found!
+    	   syntaxHighlighting.put(i, _commentColor);
        }
        else if(currentState == q25){
-    	   return "00FF00"; //print statements are green
+    	   //Print statement found!
+    	   syntaxHighlighting.put(i, _printColor);
        }
        else if(currentState == q30){
-    	   return "FF00FF"; //int assignments are magenta
+    	   //Integer assignment found!
+    	   syntaxHighlighting.put(i, _intassignColor);
        }
        else if(currentState == q36){
-    	   return "00FFFF"; //variable assignments are cyan
+    	   //Variable assignment found!
+    	   syntaxHighlighting.put(i, _varassignColor);
        }
        else if(currentState == q37){
-    	   return "0F0F0F"; //string assignments are gray
+    	   //String assignment found!
+    	   syntaxHighlighting.put(i, _stringassignColor);
 	   }
        else if(currentState == q42){
-    	   return "FF0000"; //variable declarations are red
+    	   //Variable assignment found!
+    	   syntaxHighlighting.put(i, _vardeclColor);
 	   }
      }
      catch(NullPointerException e){
-    	 return "000000"; //character not found, return default color (black)
+    	 //An unrecognized character was found
      }
     }
-     return "000000"; //string not accepted, return default color (black)
+     //Return the HashMap
+     return syntaxHighlighting;
     }
 }
