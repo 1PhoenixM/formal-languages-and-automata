@@ -55,6 +55,9 @@ public class syntaxHighlightingGUI extends Application {
 	//The JavaFX scene, with a Group for MenuBar + HTMLEditor
 	static Scene scene = new Scene(new Group()); 
 	
+	//Flag for whether statements will be split over lines
+	static boolean lineMode = true;
+	
     //References used: https://docs.oracle.com/javafx/2/ui_controls/editor.htm - For HTMLEditor
     //http://docs.oracle.com/javafx/2/ui_controls/menu_controls.htm - For MenuBar
 	//http://stackoverflow.com/questions/22128153/javafx-htmleditor-text-change-listener - For event listener
@@ -258,8 +261,19 @@ public class syntaxHighlightingGUI extends Application {
             } //handler
         }); //listener
         
+      //Line mode - decides whether statements should break over lines or not.
+        //Shortcut: Ctrl+B
+        MenuItem lineModeMenu = new MenuItem("Change Line Mode");
+        lineModeMenu.setAccelerator(KeyCombination.keyCombination("Ctrl+B"));
+        //When clicked, this event handler is run
+        lineModeMenu.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+            	lineMode = lineMode ? false : true;
+            } //handler
+        }); //listener
+        
         //Adds three menu options to the File menu.
-        menuFile.getItems().addAll(loadFile, saveFile, new SeparatorMenuItem(), loadColorScheme);
+        menuFile.getItems().addAll(loadFile, saveFile, new SeparatorMenuItem(), loadColorScheme, lineModeMenu);
         
         //Adds the File menu to the MenuBar.
         menuBar.getMenus().addAll(menuFile);
@@ -364,7 +378,16 @@ public class syntaxHighlightingGUI extends Application {
      
       String cleanText = sb.toString().trim();
       //System.out.println("I see: " + cleanText);
-   	 
+      if(cleanText.endsWith("&nbsp;")){
+    	  cleanText = cleanText.substring(0,cleanText.length()-6);
+    	  cleanText = cleanText.replaceAll("&nbsp;", " ");
+    	  cleanText += "&nbsp;";
+      }
+      else{
+    	  cleanText = cleanText.replaceAll("&nbsp;", " ");
+      }
+      cleanText = cleanText.replaceAll(" +", " ");
+     
       //Use DFA to evaluate the user input and return a mapping of the colors to be used and where they should be used.
 	  HashMap<Integer,String> syntaxHighlighting = syntaxHighlightingDFA.accepts(cleanText);
 
@@ -402,17 +425,36 @@ public class syntaxHighlightingGUI extends Application {
 			  textColor = "#" + syntaxHighlighting.get(stringIndices[i]);
 			  //Make a new span element for that color
 			  htmlString += "<span style=color:" + textColor + ">";
+			  
 			  //Select only that Statement from the whole input
-			  htmlString += cleanText.substring(start,(Integer)(stringIndices[i])+1);
+			  if(cleanText.length() > 6 && cleanText.length() > start+6 && cleanText.substring(start,start+6) == "&nbsp;"){
+				  htmlString += cleanText.substring(start+7,(Integer)(stringIndices[i])+7); //1
+				  //The start of the next Statement will be at the next position
+				  start = (Integer)(stringIndices[i])+7; 
+			  }
+			  else{
+				  String forHTML = cleanText.substring(start,(Integer)(stringIndices[i])+1).replaceAll(" ", "&nbsp;").replaceAll(" &nbsp;", "&nbsp;");
+				  htmlString += forHTML;
+				  //The start of the next Statement will be at the next position
+				  start = (Integer)(stringIndices[i])+1; 
+			  }
 			  //difference between cleanText and sb.toString()
 			  //End the span at the end of the Statement
-			  htmlString += "</span>";
-			  //The start of the next Statement will be at the next position
-			  start = (Integer)(stringIndices[i])+1; 
+			  htmlString += "</span>"; //adds line break
+			  if(lineMode){
+				  htmlString += "<br>";
+			  }
 		  } 
 		  //Add the rest of the input, say if there is a valid Statement and more input after it that is not valid after
 		  //start will be set to 0 if there were no Statements, and this would be the entire input
-		  htmlString += cleanText.substring(start,cleanText.length()); 
+		  //account for &nbsp;
+		  //DFA will read: var a print ( a )
+		  //User sees: var a &nbsp;print ( a )
+		  if(start < cleanText.length()){
+			  //cleanText = cleanText.replaceAll(" +&nbsp;", "&nbsp;");
+			  htmlString += cleanText.substring(start,cleanText.length()); 
+		  }
+		  //htmlString = htmlString.replaceAll("</span>", "</span>&nbsp;");
 	  }
 	  //If no valid Statements yet, just add back all the input
 	  else{

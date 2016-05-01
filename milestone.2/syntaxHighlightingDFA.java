@@ -115,7 +115,7 @@ public class syntaxHighlightingDFA {
 		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,q29,e,e,e,e,e,e,e}, //q28
 		  {q36,q36,q36,q36,q36,q36,q36,q36,q36,q36,q36,q36,q36,q36,q36,q36,q36,q36,q36,q36,q36,q36,q36,q36,q36,q36,q30,q30,q30,q30,q30,q30,q30,q30,q30,q30,e,e,e,e,q33,e,e,e}, //q29
 		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,q31,e,e,e,e,e,e,e}, //q30
-		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,q32,e,e,e,e,e,e}, //q31
+		  {q26,q26,q26,q26,q26,q26,q26,q26,q26,q26,q26,q26,q26,q26,q26,q8,q26,q26,q26,q26,q26,q38,q26,q26,q26,q26,e,e,e,e,e,e,e,e,e,e,e,q32,q1,e,e,e,e,e}, //q31 - continues + int exp, or another statement
  		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,q29,e,e,e,e,e,e,e}, //q32
 		  {e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,q34,e,e,e,e,e,e,e}, //q33
 		  {q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,q34,e,e,e,e,e,e,e,e,e,e,q35,e,e,e,e,e,e,e}, //q34
@@ -226,7 +226,8 @@ public class syntaxHighlightingDFA {
     */
    public HashMap<Integer,String> accepts(String s){
 	 
-	 //s = s.replaceAll("&nbsp;", " ");
+	 s = s.replaceAll("&nbsp;", " ");
+	 //s = s.replaceAll(" +", " ");
 	 //s = s.replaceAll("\n", " ");
 	 //System.out.println("DFA sees: " + s);
 	 

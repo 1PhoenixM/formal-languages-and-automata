@@ -1,0 +1,1 @@
+*- comment -* var v v = 0 print ( v )

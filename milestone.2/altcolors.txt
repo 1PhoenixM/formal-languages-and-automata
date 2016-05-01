@@ -1,0 +1,6 @@
+comment=FF69B4
+vardecl=FFFF00
+print=FF00FF
+intassign=00FA9A
+stringassign=FF4500
+varassign=40E0D0

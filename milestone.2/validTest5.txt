@@ -1,0 +1,1 @@
+var p var v v = p print ( p )
